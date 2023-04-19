@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FalseR Bank</string>
     <string name="title_activity_main">FalseR Bank</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_accounts">Accounts</string>
+    <string name="title_cards">Cards</string>
+    <string name="title_profile">Profile</string>
 </resources>

@@ -1,13 +1,13 @@
-package com.falser.bank.ui.home
+package com.falser.bank.ui.accounts
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class AccountsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is accounts Fragment"
     }
     val text: LiveData<String> = _text
 }
