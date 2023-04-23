@@ -4,35 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
+import com.falser.bank.R
 import com.falser.bank.databinding.FragmentCardsBinding
+import com.falser.bank.ui.cards.pager.CardPagesAdapter
+
 
 class CardsFragment : Fragment() {
 
     private var _binding: FragmentCardsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private var paresAdapter: CardPagesAdapter? = null
+    private var viewPager: ViewPager2? = null
+//    private lateinit var cardModel: CardsViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val cardsViewModel =
-            ViewModelProvider(this).get(CardsViewModel::class.java)
-
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentCardsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+//        cardModel = ViewModelProvider(this)[CardsViewModel::class.java]
+        return binding.root
+    }
 
-        val textView: TextView = binding.textCards
-        cardsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        paresAdapter = activity?.let { CardPagesAdapter(it) }
+        viewPager = view.findViewById(R.id.cards_pager)
+        viewPager?.adapter = paresAdapter
     }
 
     override fun onDestroyView() {
