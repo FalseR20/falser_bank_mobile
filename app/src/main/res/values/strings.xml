@@ -4,4 +4,6 @@
     <string name="title_accounts">Accounts</string>
     <string name="title_cards">Cards</string>
     <string name="title_profile">Profile</string>
+    <string name="button_deposit_text">Deposit</string>
+    <string name="button_transfer_text">Transfer</string>
 </resources>
