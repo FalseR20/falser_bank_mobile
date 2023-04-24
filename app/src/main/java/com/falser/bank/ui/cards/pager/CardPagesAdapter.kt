@@ -15,7 +15,7 @@ class CardPagesAdapter(fragmentActivity: FragmentActivity) :
 
 
     override fun getItemCount(): Int {
-        return length
+        return fragments.size
     }
 
     override fun createFragment(position: Int): Fragment {

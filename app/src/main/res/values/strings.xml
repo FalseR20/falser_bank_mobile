@@ -8,4 +8,5 @@
     <string name="button_transfer_text">Transfer</string>
     <string name="transactions_header_text">Last transactions</string>
     <string name="create_new_card_text">Create\nnew card</string>
+    <string name="title_activity_new_card">NewCardActivity</string>
 </resources>
