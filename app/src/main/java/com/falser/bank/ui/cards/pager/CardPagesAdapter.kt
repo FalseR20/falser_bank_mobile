@@ -8,8 +8,11 @@ class CardPagesAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
     private val length = 2
-    private var fragments: Array<CardPageFragment> =
-        Array(length) { i: Int -> CardPageFragment(i == length - 1) }
+    private val fragments = mutableListOf<Fragment>().apply {
+        repeat(length - 1) { add(CardPageFragment()) }
+        add(NewCardPageFragment())
+    }
+
 
     override fun getItemCount(): Int {
         return length
