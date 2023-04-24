@@ -4,6 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="@dimen/card_pade_height"
+        android:padding="5dp"
         android:orientation="vertical"
         tools:context=".ui.cards.pager.CardPageFragment"
         android:background="@drawable/outline_border_gray_transparent">

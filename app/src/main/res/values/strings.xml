@@ -7,5 +7,5 @@
     <string name="button_deposit_text">Deposit</string>
     <string name="button_transfer_text">Transfer</string>
     <string name="transactions_header_text">Last transactions</string>
-    <string name="create_new_card_text">Create new card</string>
+    <string name="create_new_card_text">Create\nnew card</string>
 </resources>
