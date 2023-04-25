@@ -8,5 +8,12 @@
     <string name="button_transfer_text">Transfer</string>
     <string name="transactions_header_text">Last transactions</string>
     <string name="create_new_card_text">Create\nnew card</string>
-    <string name="title_activity_new_card">NewCardActivity</string>
+    <string name="title_activity_new_card">Create new card</string>
+    <string name="card_system_text">System</string>
+    <string name="service_time">Service time (years)</string>
+    <string name="cardholder_name">Cardholder name</string>
+    <string name="account">Account</string>
+    <string name="currency">Currency</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
 </resources>

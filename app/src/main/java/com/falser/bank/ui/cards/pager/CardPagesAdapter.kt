@@ -7,9 +7,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class CardPagesAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
-    private val length = 2
+//    private val length = 2
     private val fragments = mutableListOf<Fragment>().apply {
-        repeat(length - 1) { add(CardPageFragment()) }
+//        repeat(length - 1) { add(CardPageFragment()) }
         add(NewCardPageFragment())
     }
 
