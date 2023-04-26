@@ -16,4 +16,5 @@
     <string name="currency">Currency</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
+    <string name="field_is_required">Field is required</string>
 </resources>
