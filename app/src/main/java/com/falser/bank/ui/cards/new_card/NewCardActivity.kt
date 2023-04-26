@@ -2,6 +2,7 @@ package com.falser.bank.ui.cards.new_card
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -18,11 +19,15 @@ class NewCardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewCardBinding
 
     private lateinit var systems: Array<String>
+    private lateinit var serviceTimes: Array<String>
     private lateinit var accounts: Array<String>
     private lateinit var currencies: Array<String>
 
     private lateinit var systemFieldLayout: TextInputLayout
     private lateinit var systemField: AutoCompleteTextView
+
+    private lateinit var serviceTimeFieldLayout: TextInputLayout
+    private lateinit var serviceTimeField: AutoCompleteTextView
 
     private lateinit var cardholderNameFieldLayout: TextInputLayout
     private lateinit var cardholderNameField: EditText
@@ -43,28 +48,44 @@ class NewCardActivity : AppCompatActivity() {
         fillFields()
         accountField.addTextChangedListener(afterTextChanged = ::newAccount)
         findViewById<Button>(R.id.cancel_button)!!.setOnClickListener { finish() }
-        findViewById<Button>(R.id.create_button)!!.setOnClickListener { create() }
+        findViewById<Button>(R.id.create_button)!!.setOnClickListener { createCard() }
     }
 
-    private fun create() {
-        val errorText = getString(R.string.field_is_required)
+    private fun validate(): Boolean {
+        var isValid = true
+        val errorText: String by lazy { isValid = false; getString(R.string.field_is_required) }
         systemFieldLayout.error = if (systemField.text.isEmpty()) errorText else null
-        cardholderNameFieldLayout.error = if (cardholderNameField.text.isBlank()) errorText else null
+        serviceTimeFieldLayout.error = if (serviceTimeField.text.isEmpty()) errorText else null
+        cardholderNameFieldLayout.error =
+            if (cardholderNameField.text.isBlank()) errorText else null
         accountFieldLayout.error = if (accountField.text.isEmpty()) errorText else null
         currenciesFieldLayout.error = if (currenciesField.text.isEmpty()) errorText else null
+        return isValid
+    }
+
+    private fun createCard() {
+        if (validate()) Log.i(javaClass.simpleName, "Card is valid")
     }
 
     private fun fillArrays() {
         systems = resources.getStringArray(R.array.systems)
+        serviceTimes = resources.getStringArray(R.array.service_times)
         accounts = arrayOf("new", "EXISTED...")
         currencies = resources.getStringArray(R.array.currencies)
     }
 
     private fun fillFields() {
+
         // System field
         systemFieldLayout = findViewById(R.id.system_field_layout)
         systemField = findViewById(R.id.system_field)
         systemField.setAdapter(ArrayAdapter(this, R.layout.list_item, systems))
+
+        // Service time field
+        serviceTimeFieldLayout = findViewById(R.id.service_time_field_layout)
+        serviceTimeField = findViewById(R.id.service_time_field)
+        serviceTimeField.setAdapter(ArrayAdapter(this, R.layout.list_item, serviceTimes))
+        serviceTimeField.setText(serviceTimes[2], false)
 
         // Cardholder name field
         cardholderNameFieldLayout = findViewById(R.id.cardholder_name_field_layout)
@@ -74,6 +95,7 @@ class NewCardActivity : AppCompatActivity() {
         accountFieldLayout = findViewById(R.id.account_field_layout)
         accountField = findViewById(R.id.account_field)
         accountField.setAdapter(ArrayAdapter(this, R.layout.list_item, accounts))
+        accountField.setText(accounts[0], false)
 
         // Currencies field
         currenciesFieldLayout = findViewById(R.id.currency_field_layout)

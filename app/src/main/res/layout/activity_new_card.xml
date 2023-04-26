@@ -13,7 +13,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
+            app:helperText="Pay system"
+            android:layout_marginBottom="15dp"
             android:hint="@string/card_system_text">
 
         <AutoCompleteTextView
@@ -21,39 +22,34 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="none"
-                tools:text="Visa"
                 tools:ignore="LabelFor,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.slider.Slider
-            android:id="@+id/service_time_slider"
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/service_time_field_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:valueFrom="1"
-            android:valueTo="5"
-            android:stepSize="1"
-            android:value="3"
-            android:contentDescription="@string/service_time"
-            app:labelBehavior="visible" />
+            app:helperText="Card expiration date years"
+            android:layout_marginBottom="15dp"
+            android:hint="@string/service_time">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/service_time"
-            android:textSize="16sp"
-            android:textAlignment="center"
-            android:labelFor="@id/service_time_slider"
-
-            />
-
+        <AutoCompleteTextView
+                android:id="@+id/service_time_field"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="none"
+                tools:text="3"
+                tools:ignore="LabelFor,VisualLintTextFieldSize" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/cardholder_name_field_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
+            app:helperText="You can use your nickname"
+            android:layout_marginBottom="15dp"
             android:hint="@string/cardholder_name">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -68,7 +64,8 @@
             android:id="@+id/account_field_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
+            app:helperText="Create new account or use existed one"
             android:hint="@string/account">
 
         <AutoCompleteTextView
@@ -85,7 +82,8 @@
             android:id="@+id/currency_field_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
+            app:helperText="Currency of account"
+            android:layout_marginBottom="15dp"
             android:hint="@string/currency">
 
         <AutoCompleteTextView
@@ -93,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:inputType="none"
-                tools:text="new"
                 tools:ignore="LabelFor,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
