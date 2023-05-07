@@ -8,6 +8,7 @@ import com.falser.bank.repository.models.Course
 import com.falser.bank.repository.models.Currency
 import com.falser.bank.repository.models.Transaction
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
+import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
@@ -18,18 +19,21 @@ class DatabaseHelper(context: Context?) :
 
     companion object {
         const val DATABASE_NAME = "database.sqlite3"
-        const val DATABASE_VERSION = 11
+        const val DATABASE_VERSION = 17
     }
 
-    val currencyDao = DaoManager.createDao(connectionSource, Currency::class.java)!!
-    val courseDao = DaoManager.createDao(connectionSource, Course::class.java)!!
-    val accountDao = DaoManager.createDao(connectionSource, Account::class.java)!!
-    val cardDao = DaoManager.createDao(connectionSource, Card::class.java)!!
-    val transactionDao = DaoManager.createDao(connectionSource, Transaction::class.java)!!
+    val currencyDao: Dao<Currency, Long> =
+        DaoManager.createDao(connectionSource, Currency::class.java)!!
+    val courseDao: Dao<Course, Long> = DaoManager.createDao(connectionSource, Course::class.java)!!
+    val accountDao: Dao<Account, Long> =
+        DaoManager.createDao(connectionSource, Account::class.java)!!
+    val cardDao: Dao<Card, Long> = DaoManager.createDao(connectionSource, Card::class.java)!!
+    val transactionDao: Dao<Transaction, Long> =
+        DaoManager.createDao(connectionSource, Transaction::class.java)!!
 
     override fun onCreate(database: SQLiteDatabase?, connectionSource: ConnectionSource?) {
         TableUtils.createTable(currencyDao)
-        val bynCurrency = Currency("BYN", coursePrecision = 0)
+        val bynCurrency = Currency("BYN", "%s Br", coursePrecision = 0)
         val usdCurrency = Currency("USD", "$%s")
         val euroCurrency = Currency("EUR", "%s €")
         currencyDao.create(mutableListOf(bynCurrency, usdCurrency, euroCurrency))
@@ -41,6 +45,11 @@ class DatabaseHelper(context: Context?) :
         courseDao.create(mutableListOf(bynCourse, usdCourse, euroCourse))
 
         TableUtils.createTable(accountDao)
+        val bynAccount = Account(bynCurrency, 723)
+        val usdAccount = Account(usdCurrency, 1235)
+        val euroAccount = Account(euroCurrency, 99)
+        accountDao.create(mutableListOf(bynAccount, usdAccount, euroAccount))
+
         TableUtils.createTable(cardDao)
         TableUtils.createTable(transactionDao)
     }

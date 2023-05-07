@@ -4,12 +4,12 @@ import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
 
 @DatabaseTable
-class Account {
+class Account() {
     @DatabaseField(generatedId = true)
     var id: Long? = null
 
     @DatabaseField(foreign = true)
-    val currency: Currency? = null
+    var currency: Currency? = null
 
 //    @DatabaseField(foreign = true)
 //    val user: User? = null  // TODO: add User table
@@ -19,4 +19,10 @@ class Account {
 
     @DatabaseField
     var isClosed: Boolean? = null
+
+    constructor(currency: Currency, balance: Long = 0) : this() {
+        this.currency = currency
+        this.balance = balance
+        this.isClosed = false
+    }
 }
