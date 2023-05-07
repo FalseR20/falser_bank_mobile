@@ -5,15 +5,21 @@ import com.j256.ormlite.table.DatabaseTable
 import java.sql.Timestamp
 
 
-@DatabaseTable(tableName = "transaction")
-class Transaction(
-    @DatabaseField(generatedId = true) var id: Long,
-    @DatabaseField(foreign = true) var currency: Currency,
-    @DatabaseField var value: Long,  // TODO: separate
-//    @DatabaseField var commission: Long,  // TODO: add
-    @DatabaseField var time: Timestamp,
+@DatabaseTable
+class Transaction {
 
-    ) {
-    @Suppress("unused")
-    constructor() : this(0, Currency(), 0, Timestamp(0))
+    @DatabaseField(generatedId = true)
+    var id: Long? = null
+
+    @DatabaseField(foreign = true)
+    var currency: Currency? = null
+
+    @DatabaseField
+    var value: Long? = null  // TODO: separate
+
+    @DatabaseField
+    var commission: Long? = null  // TODO: add
+
+    @DatabaseField
+    var time: Timestamp? = null
 }
