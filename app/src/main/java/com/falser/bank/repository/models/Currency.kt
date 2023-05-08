@@ -33,7 +33,11 @@ class Currency() {
         this.coursePrecision = coursePrecision
     }
 
+    fun valueToString(value: Long): String {
+        return precision!!.let { "%.${it}f".format(value / 10f.pow(it)) }
+    }
+
     fun format(value: Long): String {
-        return precision!!.let { humanFormat!!.format("%.${it}f".format(value / 10f.pow(it))) }
+        return humanFormat!!.format(valueToString(value))
     }
 }

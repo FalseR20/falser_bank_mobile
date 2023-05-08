@@ -63,7 +63,7 @@ class NewCardActivity : AppCompatActivity() {
         binding = ActivityNewCardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        helper = DatabaseHelperFactory.getHelper()
+        helper = DatabaseHelperFactory.helper
 
         fillArrays()
         fillFields()

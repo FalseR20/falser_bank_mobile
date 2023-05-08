@@ -25,4 +25,12 @@ class Account() {
         this.balance = balance
         this.isClosed = false
     }
+
+    fun balanceString(): String {
+        return currency!!.valueToString(balance!!)
+    }
+
+//    fun balanceHumanFormat(): String {
+//        return currency!!.format(balance!!)
+//    }
 }

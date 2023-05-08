@@ -8,19 +8,23 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.falser.bank.R
+import com.falser.bank.repository.DatabaseHelperFactory
+import com.falser.bank.repository.models.Card
 
 
-class CardPageFragment : Fragment() {
-
-
+class CardPageFragment(private val card: Card) : Fragment() {
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
-        val result: View = inflater.inflate(R.layout.fragment_page_card, container, false)
-        result.findViewById<TextView>(R.id.card_name).text = "1234 **** **** 0001"
-        result.findViewById<TextView>(R.id.balance_text_view).text = "12 356.40"
-        result.findViewById<TextView>(R.id.currency_text_view).text = "BYN"
+        val account = card.account!!
+        DatabaseHelperFactory.helper.accountDao.refresh(account)
+        val currency = account.currency!!
+        DatabaseHelperFactory.helper.currencyDao.refresh(currency)
 
+        val result: View = inflater.inflate(R.layout.fragment_page_card, container, false)
+        result.findViewById<TextView>(R.id.card_name).text = card.number.toString()
+        result.findViewById<TextView>(R.id.balance_text_view).text = account.balanceString()
+        result.findViewById<TextView>(R.id.currency_text_view).text = currency.code
         return result
     }
 
