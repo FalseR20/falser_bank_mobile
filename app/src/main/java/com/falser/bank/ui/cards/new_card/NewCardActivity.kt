@@ -1,5 +1,6 @@
 package com.falser.bank.ui.cards.new_card
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import com.falser.bank.MainActivity
 import com.falser.bank.R
 import com.falser.bank.databinding.ActivityNewCardBinding
 import com.falser.bank.repository.DatabaseHelper
@@ -144,7 +146,10 @@ class NewCardActivity : AppCompatActivity() {
         )
         helper.cardDao.create(card)
         Log.i(javaClass.simpleName, "Card is created: $card")
-        finish()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
+        startActivity(intent)
     }
 
     private fun validate(): Boolean {
