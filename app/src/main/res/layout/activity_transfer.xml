@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        tools:context=".ui.cards.transactions.transfer.TransferActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/value_layout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:helperText="Max value: 15 000"
+            android:layout_marginBottom="15dp"
+            android:hint="@string/value">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/value"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                tools:text="12.65 Br"
+                android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/description_layout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:helperText="Where do you send your money"
+            android:layout_marginBottom="15dp"
+            android:hint="@string/description">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/description"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                tools:text="Steam"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+        <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:text="@string/cancel" />
+
+        <Button
+                android:id="@+id/send_button"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/send"
+                tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</LinearLayout>
