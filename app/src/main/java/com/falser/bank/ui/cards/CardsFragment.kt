@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.falser.bank.R
 import com.falser.bank.databinding.FragmentCardsBinding
 import com.falser.bank.ui.cards.pager.CardPagesAdapter
 import com.falser.bank.ui.cards.transactions.transfer.TransferActivity
@@ -18,8 +16,6 @@ class CardsFragment : Fragment() {
 
     private var _binding: FragmentCardsBinding? = null
     private val binding get() = _binding!!
-    private var paresAdapter: CardPagesAdapter? = null
-    private var viewPager: ViewPager2? = null
 //    private lateinit var cardModel: CardsViewModel
 
     override fun onCreateView(
@@ -33,15 +29,34 @@ class CardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        paresAdapter = activity?.let { CardPagesAdapter(it) }
-        viewPager = view.findViewById(R.id.cards_pager)
-        viewPager?.adapter = paresAdapter
+        binding.cardsPager.adapter = CardPagesAdapter(requireActivity())
+        binding.cardsPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val isCardPageSelected = position != binding.cardsPager.adapter!!.itemCount - 1
+                binding.transferButton.isEnabled = isCardPageSelected
+                binding.depositButton.isEnabled = isCardPageSelected
+            }
+        })
 
-        val transferButton = view.findViewById<Button>(R.id.transfer_button)
-        transferButton.setOnClickListener {
-            startActivity(Intent(context, TransferActivity::class.java))
+        binding.transferButton.setOnClickListener {
+            val intent = Intent(context, TransferActivity::class.java)
+            intent.putExtra(
+                "card",
+                (binding.cardsPager.adapter!! as CardPagesAdapter).currentCard.id
+            )
+            startActivity(intent)
         }
     }
+
+//    @SuppressLint("NotifyDataSetChanged")
+//    override fun onStart() {
+//        val adapter = binding.cardsPager.adapter!! as CardPagesAdapter
+//        binding.cardsPager.post {
+//            adapter.notifyDataSetChanged()
+//            adapter.notifyItemChanged(adapter.cardsCount - 1)
+//        }
+//        super.onStart()
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

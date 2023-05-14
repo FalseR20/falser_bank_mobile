@@ -4,20 +4,27 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.falser.bank.repository.DatabaseHelperFactory
+import com.falser.bank.repository.models.Card
 
 class CardPagesAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
-    private val fragments = mutableListOf<Fragment>().apply {
-        DatabaseHelperFactory.helper.cardDao.forEach { add(CardPageFragment(it)) }
-        add(NewCardPageFragment())
-    }
+    private lateinit var card: Card
+    val currentCard: Card get() = card
+
+    val cardsCount: Int get() = DatabaseHelperFactory.helper.cardDao.count()
 
     override fun getItemCount(): Int {
-        return fragments.size
+        return cardsCount + 1
     }
 
     override fun createFragment(position: Int): Fragment {
-        return fragments[position]
+        if (position == cardsCount) return NewCardPageFragment()
+        card = DatabaseHelperFactory.helper.cardDao.queryForAll()[position]
+        return CardPageFragment(card)
+    }
+
+    fun update() {
+
     }
 }

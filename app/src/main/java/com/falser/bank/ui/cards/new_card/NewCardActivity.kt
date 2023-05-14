@@ -1,6 +1,5 @@
 package com.falser.bank.ui.cards.new_card
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -11,10 +10,8 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import com.falser.bank.MainActivity
 import com.falser.bank.R
 import com.falser.bank.databinding.ActivityNewCardBinding
-import com.falser.bank.repository.DatabaseHelper
 import com.falser.bank.repository.DatabaseHelperFactory
 import com.falser.bank.repository.models.Account
 import com.falser.bank.repository.models.Card
@@ -23,8 +20,6 @@ import com.google.android.material.textfield.TextInputLayout
 
 class NewCardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewCardBinding
-
-    private lateinit var helper: DatabaseHelper
 
     private lateinit var systems: Array<String>
     private lateinit var serviceTimes: Array<String>
@@ -65,7 +60,6 @@ class NewCardActivity : AppCompatActivity() {
         binding = ActivityNewCardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        helper = DatabaseHelperFactory.helper
 
         fillArrays()
         fillFields()
@@ -81,15 +75,15 @@ class NewCardActivity : AppCompatActivity() {
         systems = resources.getStringArray(R.array.systems)
         serviceTimes = resources.getStringArray(R.array.service_times)
 
-        val accountsModels = helper.accountDao.queryForAll()
+        val accountsModels = DatabaseHelperFactory.helper.accountDao.queryForAll()
         accounts = accountsModels.map {
-            helper.currencyDao.refresh(it.currency)
+            DatabaseHelperFactory.helper.currencyDao.refresh(it.currency)
             "Account ${it.id} with ${it.currency!!.format(it.balance!!)}"
         }.toTypedArray()
         accountsMap = accounts.zip(accountsModels.map { it.id!! }).toMap()
         accounts += "Create new account"
 
-        val currenciesModels = helper.currencyDao.queryForAll()
+        val currenciesModels = DatabaseHelperFactory.helper.currencyDao.queryForAll()
         currencies = currenciesModels.map { it.code!! }.toTypedArray()
         currenciesMap = currencies.zip(currenciesModels.map { it.id!! }).toMap()
     }
@@ -132,24 +126,25 @@ class NewCardActivity : AppCompatActivity() {
         val account: Account
         if (accountField.editableText.toString() == accounts[accounts.size - 1]) {
             val id = currenciesMap.getValue(currenciesField.text.toString())
-            account = Account(helper.currencyDao.queryForId(id), 0) // TODO: create new data
-            helper.accountDao.create(account)
+            account = Account(
+                DatabaseHelperFactory.helper.currencyDao.queryForId(id),
+                0
+            ) // TODO: create new data
+            DatabaseHelperFactory.helper.accountDao.create(account)
             Log.i(javaClass.simpleName, "Account is created: $account")
         } else {
             val id = accountsMap.getValue(accountField.text.toString())
-            account = helper.accountDao.queryForId(id)
+            account = DatabaseHelperFactory.helper.accountDao.queryForId(id)
         }
         val card = Card(
             account,
             cardholderNameField.text.toString(),
             serviceTimeField.text.toString().toInt()
         )
-        helper.cardDao.create(card)
+        DatabaseHelperFactory.helper.cardDao.create(card)
         Log.i(javaClass.simpleName, "Card is created: $card")
 
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
-        startActivity(intent)
+        finish()
     }
 
     private fun validate(): Boolean {

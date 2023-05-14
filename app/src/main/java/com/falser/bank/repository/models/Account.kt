@@ -30,7 +30,7 @@ class Account() {
         return currency!!.valueToString(balance!!)
     }
 
-//    fun balanceHumanFormat(): String {
-//        return currency!!.format(balance!!)
-//    }
+    fun balanceHumanFormat(): String {
+        return currency!!.format(balance!!)
+    }
 }
