@@ -47,6 +47,7 @@ class NewCardActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
+                setResult(RESULT_CANCELED)
                 finish()
                 true
             }
@@ -67,7 +68,7 @@ class NewCardActivity : AppCompatActivity() {
             currenciesFieldLayout.isVisible = it.toString() == accounts[accounts.size - 1]
         })
         currenciesFieldLayout.isVisible = accounts.size == 1
-        findViewById<Button>(R.id.cancel_button)!!.setOnClickListener { finish() }
+        findViewById<Button>(R.id.cancel_button)!!.setOnClickListener { setResult(RESULT_CANCELED); finish() }
         findViewById<Button>(R.id.create_button)!!.setOnClickListener { createCard() }
     }
 
@@ -127,8 +128,7 @@ class NewCardActivity : AppCompatActivity() {
         if (accountField.editableText.toString() == accounts[accounts.size - 1]) {
             val id = currenciesMap.getValue(currenciesField.text.toString())
             account = Account(
-                DatabaseHelperFactory.helper.currencyDao.queryForId(id),
-                0
+                DatabaseHelperFactory.helper.currencyDao.queryForId(id), 0
             ) // TODO: create new data
             DatabaseHelperFactory.helper.accountDao.create(account)
             Log.i(javaClass.simpleName, "Account is created: $account")
@@ -137,13 +137,11 @@ class NewCardActivity : AppCompatActivity() {
             account = DatabaseHelperFactory.helper.accountDao.queryForId(id)
         }
         val card = Card(
-            account,
-            cardholderNameField.text.toString(),
-            serviceTimeField.text.toString().toInt()
+            account, cardholderNameField.text.toString(), serviceTimeField.text.toString().toInt()
         )
         DatabaseHelperFactory.helper.cardDao.create(card)
         Log.i(javaClass.simpleName, "Card is created: $card")
-
+        setResult(RESULT_OK)
         finish()
     }
 

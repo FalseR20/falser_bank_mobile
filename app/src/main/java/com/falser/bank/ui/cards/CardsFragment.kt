@@ -1,13 +1,16 @@
 package com.falser.bank.ui.cards
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.falser.bank.databinding.FragmentCardsBinding
+import com.falser.bank.ui.cards.new_card.NewCardActivity
 import com.falser.bank.ui.cards.pager.CardPagesAdapter
 import com.falser.bank.ui.cards.transactions.transfer.TransferActivity
 
@@ -29,7 +32,9 @@ class CardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.cardsPager.adapter = CardPagesAdapter(requireActivity())
+        binding.cardsPager.adapter = CardPagesAdapter(requireActivity()) {
+            startForResult.launch(Intent(context, NewCardActivity::class.java))
+        }
         binding.cardsPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 val isCardPageSelected = position != binding.cardsPager.adapter!!.itemCount - 1
@@ -41,22 +46,20 @@ class CardsFragment : Fragment() {
         binding.transferButton.setOnClickListener {
             val intent = Intent(context, TransferActivity::class.java)
             intent.putExtra(
-                "card",
-                (binding.cardsPager.adapter!! as CardPagesAdapter).currentCard.id
+                "card", (binding.cardsPager.adapter!! as CardPagesAdapter).currentCard.id
             )
             startActivity(intent)
         }
     }
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    override fun onStart() {
-//        val adapter = binding.cardsPager.adapter!! as CardPagesAdapter
-//        binding.cardsPager.post {
-//            adapter.notifyDataSetChanged()
-//            adapter.notifyItemChanged(adapter.cardsCount - 1)
-//        }
-//        super.onStart()
-//    }
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val adapter = binding.cardsPager.adapter!!
+                adapter.notifyItemInserted(adapter.itemCount - 2)
+                binding.cardsPager.currentItem = 0
+            }
+        }
 
     override fun onDestroyView() {
         super.onDestroyView()
