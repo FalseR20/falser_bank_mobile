@@ -48,7 +48,7 @@ class TransferActivity : AppCompatActivity() {
         }
         val transaction = Transaction(
             currency,
-            account,
+            card,
             value,
             binding.description.text.toString(),
         )

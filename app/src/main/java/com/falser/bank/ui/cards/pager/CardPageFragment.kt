@@ -30,7 +30,7 @@ class CardPageFragment(val card: Card) : Fragment() {
         currency = account.currency!!
         DatabaseHelperFactory.helper.currencyDao.refresh(currency)
 
-        binding.cardName.setText(card.number.toString())
+        binding.cardNumber.text = card.humanNumber()
         binding.balanceTextView.text = account.balanceString()
         binding.currencyTextView.text = currency.code
 

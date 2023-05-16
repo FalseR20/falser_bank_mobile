@@ -52,7 +52,7 @@ class CardsFragment : Fragment() {
             )
             startActivity(intent)
         }
-        binding.transactions.layoutManager = LinearLayoutManager(context)
+        binding.transactions.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.transactions.adapter = TransactionAdapter()
     }
 

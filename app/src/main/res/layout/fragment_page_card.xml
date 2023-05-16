@@ -9,15 +9,14 @@
         tools:context=".ui.cards.pager.CardPageFragment"
         android:background="@drawable/outline_border_gray_transparent">
 
-    <EditText
-            android:id="@+id/card_name"
+    <TextView
+            android:id="@+id/card_number"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="45dp"
             tools:text="Card name"
             android:maxLength="30"
-            android:textSize="20sp"
-            android:inputType="text"
+            android:textSize="25sp"
             android:importantForAutofill="no"
             tools:ignore="LabelFor" />
 
@@ -25,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_height="60dp"
-            app:layout_constraintTop_toBottomOf="@id/card_name"
+            app:layout_constraintTop_toBottomOf="@id/card_number"
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintRight_toLeftOf="parent"
             android:orientation="horizontal">

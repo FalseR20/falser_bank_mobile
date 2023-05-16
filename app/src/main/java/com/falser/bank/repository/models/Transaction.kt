@@ -12,16 +12,13 @@ class Transaction() {
     var id: Long? = null
 
     @DatabaseField(foreign = true)
-    var currency: Currency? = null
+    var card: Card? = null
 
     @DatabaseField(foreign = true)
-    var account: Account? = null
+    var currency: Currency? = null
 
     @DatabaseField
     var value: Long? = null
-
-//    @DatabaseField
-//    var commission: Long? = null  // TODO: add
 
     @DatabaseField
     var description: String? = null
@@ -34,12 +31,12 @@ class Transaction() {
 
     constructor(
         currency: Currency,
-        account: Account,
+        card: Card,
         value: Long,
         description: String,
     ) : this() {
         this.currency = currency
-        this.account = account
+        this.card = card
         this.value = value
         this.description = description
         this.time = Timestamp(System.currentTimeMillis())

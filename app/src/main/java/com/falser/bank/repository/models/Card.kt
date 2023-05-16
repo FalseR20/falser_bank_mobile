@@ -47,4 +47,8 @@ class Card() {
     override fun toString(): String {
         return "${javaClass.simpleName}(number=$number)"
     }
+
+    fun humanNumber(): String {
+        return number.toString().chunked(4).joinToString(" ")
+    }
 }

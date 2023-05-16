@@ -19,7 +19,7 @@ class DatabaseHelper(context: Context?) :
 
     companion object {
         const val DATABASE_NAME = "database.sqlite3"
-        const val DATABASE_VERSION = 30
+        const val DATABASE_VERSION = 31
     }
 
     val currencyDao: Dao<Currency, Long> =
