@@ -50,7 +50,7 @@ class TransferActivity : AppCompatActivity() {
             currency,
             account,
             value,
-            binding.description.toString(),
+            binding.description.text.toString(),
         )
         DatabaseHelperFactory.helper.transactionDao.create(transaction)
         if (account.balance!! >= value) {
