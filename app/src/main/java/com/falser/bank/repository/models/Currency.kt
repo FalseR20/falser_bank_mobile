@@ -2,6 +2,8 @@ package com.falser.bank.repository.models
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
+import java.text.NumberFormat
+import java.util.Locale
 import kotlin.math.pow
 
 @DatabaseTable
@@ -34,7 +36,9 @@ class Currency() {
     }
 
     fun valueToString(value: Long): String {
-        return precision!!.let { "%.${it}f".format(value / 10f.pow(it)) }
+        val numberFormat: NumberFormat = NumberFormat.getNumberInstance(Locale.US)
+        val valueDouble: Double = value / 10.0.pow(precision!!)
+        return numberFormat.format(valueDouble)
     }
 
     fun format(value: Long): String {

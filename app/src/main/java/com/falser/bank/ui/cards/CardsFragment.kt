@@ -14,6 +14,7 @@ import com.falser.bank.databinding.FragmentCardsBinding
 import com.falser.bank.ui.cards.new_card.NewCardActivity
 import com.falser.bank.ui.cards.pager.CardPagesAdapter
 import com.falser.bank.ui.cards.transactions.TransactionAdapter
+import com.falser.bank.ui.cards.transactions.transfer.DepositActivity
 import com.falser.bank.ui.cards.transactions.transfer.TransferActivity
 
 
@@ -45,6 +46,13 @@ class CardsFragment : Fragment() {
             }
         })
 
+        binding.depositButton.setOnClickListener {
+            val intent = Intent(context, DepositActivity::class.java)
+            intent.putExtra(
+                "card", (binding.cardsPager.adapter!! as CardPagesAdapter).currentCard.id
+            )
+            startActivity(intent)
+        }
         binding.transferButton.setOnClickListener {
             val intent = Intent(context, TransferActivity::class.java)
             intent.putExtra(
@@ -52,7 +60,8 @@ class CardsFragment : Fragment() {
             )
             startActivity(intent)
         }
-        binding.transactions.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.transactions.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.transactions.adapter = TransactionAdapter()
     }
 

@@ -19,6 +19,7 @@
     <string name="field_is_required">Field is required</string>
     <string name="value">Value</string>
     <string name="title_transfer">Transfer</string>
+    <string name="title_deposit">Deposit</string>
     <string name="send">Send</string>
     <string name="description">Description</string>
 </resources>

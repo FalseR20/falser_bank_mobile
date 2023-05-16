@@ -32,6 +32,10 @@
                 android:name=".ui.cards.transactions.transfer.TransferActivity"
                 android:exported="false"
                 android:label="@string/title_transfer" />
+        <activity
+                android:name=".ui.cards.transactions.transfer.DepositActivity"
+                android:exported="false"
+                android:label="@string/title_deposit" />
 
     </application>
 

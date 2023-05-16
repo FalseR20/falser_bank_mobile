@@ -12,12 +12,13 @@ import com.falser.bank.repository.models.Currency
 import com.falser.bank.repository.models.Transaction
 import kotlin.math.pow
 
-class TransferActivity : AppCompatActivity() {
+class DepositActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTransferBinding
     private lateinit var card: Card
     private lateinit var account: Account
     private lateinit var currency: Currency
+    private var maxValue: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +35,11 @@ class TransferActivity : AppCompatActivity() {
 
         binding.cancelButton.setOnClickListener { finish() }
         binding.sendButton.setOnClickListener { makeTransfer() }
+        val precision = currency.precision!!
+        maxValue = 15_000L * 10.0.pow(precision).toLong()
         binding.value.filters =
-            arrayOf(MoneyValueInputFilter(currency.precision!!, account.balance!!))
-        binding.valueLayout.helperText = "Max value: ${account.balanceHumanFormat()}"
+            arrayOf(MoneyValueInputFilter(precision, maxValue))
+        binding.valueLayout.helperText = "Max value: ${currency.format(maxValue)}"
     }
 
     private fun makeTransfer() {
@@ -49,16 +52,14 @@ class TransferActivity : AppCompatActivity() {
         val transaction = Transaction(
             currency,
             card,
-            -value,
+            value,
             binding.description.text.toString(),
         )
         DatabaseHelperFactory.helper.transactionDao.create(transaction)
-        if (account.balance!! >= value) {
-            account.balance = account.balance!! - value
-            transaction.isSuccess = true
-            DatabaseHelperFactory.helper.accountDao.update(account)
-            DatabaseHelperFactory.helper.transactionDao.update(transaction)
-        }
+        account.balance = account.balance!! + value
+        DatabaseHelperFactory.helper.accountDao.update(account)
+        transaction.isSuccess = true
+        DatabaseHelperFactory.helper.transactionDao.update(transaction)
         finish()
     }
 
