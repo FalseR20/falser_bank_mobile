@@ -31,7 +31,7 @@
             android:id="@+id/description_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:helperText="Where do you send your money"
+            app:helperText="Describe your actions to the tax"
             android:layout_marginBottom="15dp"
             android:hint="@string/description">
 
